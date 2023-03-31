@@ -1,0 +1,21 @@
+<!--Pokemon List page-->
+<div class="container-fluid px-4 py-5">
+  <header>
+    <app-header (emitFilterParams)="getFilterParams($event)"></app-header>
+  </header>
+
+  <section>
+    <div class="row">
+      <ng-container *ngFor="let pokemon of pokemonList | filterPokemon: filterParams">
+        <div class="col-6 col-sm-4 col-lg-2" *ngIf="pokemon.id">
+          <app-pokemon-item [isLazyLoad] = "true" [pokemon] = "pokemon" (click)="showPokemonDetails(pokemon)" 
+            (keyup.enter)="showPokemonDetails(pokemon)">
+          </app-pokemon-item>
+        </div>
+        <div class="col-12 pokemon-empty-state" *ngIf="!pokemon.id">
+          <h5>Sorry, No results found!</h5>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+</div>

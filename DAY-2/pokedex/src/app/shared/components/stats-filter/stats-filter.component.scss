@@ -1,0 +1,129 @@
+$white: white;
+$background-color: #93B2B2;
+$border-color: #2E3156;
+
+.stat-select-section {
+  .arrow-icon {
+    position: absolute;
+    right: 14px;
+    top: 12px;
+    color: #999;
+    margin-top: 4px;
+    border-style: solid;
+    border-width: 5px 5px 0;
+    border-color: #999 transparent;
+  }
+}
+
+.stat-filter-section {
+    position: absolute;
+    background: $white;
+    z-index: 1;
+    right: 12px;
+    width: 95%;
+    box-shadow: 0 0 5px #ccc;
+    border-radius: 8px;
+    padding: 0 15px;
+    margin-top: 4px;
+    visibility: hidden;
+    overflow: hidden;
+    height: 0;
+    transition: .5s;
+    &.expand {
+        visibility: visible;
+        height: 490px;
+        padding: 15px !important;
+    }
+    .stat-name { 
+      font-size: 15px; 
+    }
+    .stat-slider {
+      background: #F1F3F3;
+      border: 1px solid $border-color;
+      border-radius: 8px;
+      padding: 0 40px 0 24px;
+    }
+    h2 {
+      font-size: 18px;
+      padding-bottom: 15px;
+      .close-icon {
+          background: url('../../../../assets/images/close-icon.png');
+          background-repeat: no-repeat;
+          cursor: pointer;
+          background-size: cover;
+          display:inline-block;
+          width: 20px;
+          height: 20px;
+      }
+    } 
+    .filter-btns {
+      button {
+        padding: 0 10px;
+        font-size : 14px;
+        &:focus, &:hover { 
+          box-shadow: 0 0 5px $border-color;
+        }
+      }
+    }
+}
+
+
+@media screen and (min-width: 767px) {
+  .stat-filter-section {
+    width: 40%;
+    right: 35px;
+    max-width: 500px;
+  } 
+}
+
+
+//Ngx Slider custom styling
+:host ::ng-deep {
+    .ngx-slider { 
+      margin: 20px 1px 12px !important;
+      .ngx-slider-pointer {
+        width: 28px !important;
+        height: 20px !important;
+        border-radius: 50px;
+        bottom: 0 !important;
+        background-color: $border-color !important;
+        top: -10px !important;
+      }
+      .ngx-slider-bubble {
+        bottom: -8px !important;
+        padding: 3px 0 !important;
+        z-index: 4 !important;
+        font-size: 12px;
+      } 
+      .ngx-slider-bar {
+        background: $background-color !important;
+       }
+      .ngx-slider-selection {
+        background-color: $border-color !important;
+      }
+      .ngx-slider-floor {
+        left: -15px !important;
+        top: -11px !important;
+      }
+      .ngx-slider-ceil {
+        margin-left: 30px !important;
+        top: -12px !important;
+      }
+      .ngx-slider-pointer:after {
+        display: none !important;
+      }
+      .ngx-slider-bar-wrapper {
+          padding-top: 14px !important;
+      }
+      .ngx-slider-model-value, .ngx-slider-model-high {
+          color: $white !important;
+      }
+   
+    }
+
+    @media screen and (min-width: 767px) {
+      .ngx-slider  .ngx-slider-bubble { 
+        padding: 3px !important;
+      } 
+    }  
+}

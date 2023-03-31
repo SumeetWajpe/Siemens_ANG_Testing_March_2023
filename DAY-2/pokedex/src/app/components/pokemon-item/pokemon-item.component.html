@@ -1,0 +1,11 @@
+<!--Pokemon Item page-->
+<div class="card mb-3" [tabindex]="0" role="button" *ngIf = "pokemon">
+  <div class="card-body pokemon-block d-flex" [ngStyle]="pokemon.types && pokemon.types.length > 1 ? {'background-image': getGradient(pokemon) } : {'background-color':  getColor(pokemon)}" >
+      <div class="pokemon-content">
+        <img class="img-fluid" [alt]="'pokemon-'+pokemon.name" appLazyLoad [src] = "baseSpriteUrl+(pokemon.id)+'.png'" *ngIf="isLazyLoad" />
+        <img class="img-fluid" [alt]="'pokemon-'+pokemon.name" [src] = "baseSpriteUrl+(pokemon.id)+'.png'" *ngIf="!isLazyLoad" />
+        <h2 class="card-title" *ngIf="!showOnlyImage">{{ pokemon.name | titlecase }}</h2>
+        <div class="pokemon-number" *ngIf="!showOnlyImage">{{pokemon.id | number:'3.0'}}</div>
+      </div> 
+  </div>
+</div>

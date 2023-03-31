@@ -1,0 +1,89 @@
+<nav class="nav-section">
+    <div class="row m-0 logo-section">
+        <div class="col-12 p-0">
+            <span class="navbar-brand main-logo" [tabIndex]="0" role="img" aria-label="Main logo of Pokemon app"></span>
+            <span class="divider"></span>
+            <span class="main-title" role="heading" aria-level="1">
+                Search for any Pokemon that exists on the planet
+            </span>
+        </div> 
+    </div>  
+    <div class="row m-0 filter-section my-4">
+        <div class="col-9 col-md-3 col-lg-6 ps-0 position-relative">
+            <label class="form-label d-none d-md-block" for="search_pokemon">Search by</label>
+            <input id="search_pokemon" class="form-control" type="text" placeholder="Name or Number" [(ngModel)]="searchText" 
+                (keyup)="actionDispatch()" />
+            <span class="search-icon"></span>
+        </div>
+        
+        <div class="col-md-3 col-lg-2 d-none d-md-block">
+            <label for="type" class="form-label">Type</label>
+            <ng-multiselect-dropdown
+                [settings]="dropdownSettings"
+                [data]="typeList"
+                [(ngModel)]="selectedTypes"
+                (onSelect)="actionDispatch()"
+                (onDeSelect)="actionDispatch()"
+            ></ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-md-3 col-lg-2 d-none d-md-block">
+            <label for="gender" class="form-label">Gender</label>
+            <ng-multiselect-dropdown
+                [settings]="dropdownSettings"
+                [data]="genderList"
+                [(ngModel)]="selectedGenders"
+                (onSelect)="actionDispatch()"
+                (onDeSelect)="actionDispatch()"
+            ></ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-md-3 col-lg-2 d-none d-md-block">
+            <label for="stats" class="form-label">Stats</label>
+            <app-stats-filter [statList] = "statList" *ngIf="isBrowser"></app-stats-filter>
+        </div>
+
+        <div class="col-3 d-md-none p-0" [tabindex]="0">
+            <span class="hamburger-icon float-end" (click)="showHideFilterDialog(true)"></span>  
+        </div>
+    
+    </div>      
+</nav>
+
+<div class="col-12 p-0 d-block d-md-none" [tabindex]="0">
+    <app-dialog [closable]="true" (visibleChange)="showHideFilterDialog(false);" [visible]="filterDialog">
+        <div class="row m-0 filter-section" role="filter">
+            <h2 class="mb-4">Filters</h2>
+            <div class="col-12 mb-3">
+                <label for="type" class="form-label">Type</label>
+                <ng-multiselect-dropdown
+                    [settings]="dropdownSettings"
+                    [data]="typeList"
+                    [(ngModel)]="selectedTypes"
+                ></ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-12 mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <ng-multiselect-dropdown
+                    [settings]="dropdownSettings"
+                    [data]="genderList"
+                    [(ngModel)]="selectedGenders"
+                ></ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-12 mb-3">
+                <label for="stats" class="form-label">Stats</label>
+                <app-stats-filter [statList] = "statList" *ngIf="isBrowser"></app-stats-filter>
+            </div>
+            
+            <div class="col-12 filter-btns position-fixed">
+                <button type="button" class="btn" (click)="resetFilters()">Reset</button>
+                <button type="button" class="btn" (click)="applyFilters()">Apply</button>
+            </div>
+        </div>
+    </app-dialog>
+</div>
+
+ 
+

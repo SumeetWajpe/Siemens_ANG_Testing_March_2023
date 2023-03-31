@@ -1,0 +1,31 @@
+/* Pokemon item Styling */
+$text-color: #2E3156;
+
+.pokemon-block {
+    border: 1px dashed #2E3156;
+    border-radius: 8px;
+    cursor: pointer;
+    height: 250px;
+    transition: .3s;
+    .pokemon-content {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        flex: 1;
+        .img-fluid { max-height: 165px; }
+        h2{
+            font-size: 1rem;
+            font-weight: 600;
+            color: $text-color;
+        }
+        .pokemon-number{
+            font-size: 1rem;
+            font-weight: 400;
+            color: $text-color;
+        }
+    }
+    &:hover, &:focus {
+        box-shadow: 0 10px 20px rgb(0 0 0 / 12%), 0 4px 8px rgb(0 0 0 / 6%);
+    }
+}

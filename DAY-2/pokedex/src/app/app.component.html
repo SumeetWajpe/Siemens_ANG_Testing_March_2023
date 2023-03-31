@@ -1,0 +1,11 @@
+<!--Pokemon Listing-->
+<router-outlet></router-outlet>
+
+<!--Pokemon Details-->
+<router-outlet name="modal"></router-outlet>
+
+<!--Loader-->
+<div class="overlayLoader" *ngIf="isLoading | async">
+    <img alt="pokemonLoader" src="../../../assets/images/loader.gif" />
+</div>
+<!--/#Loader-->

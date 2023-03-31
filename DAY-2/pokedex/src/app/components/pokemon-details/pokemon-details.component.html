@@ -1,0 +1,132 @@
+<!-- Pokemon Details Page -->  
+<app-dialog [(visible)]="pokemonDialog">
+    <div class="col-12 px-4 pokemon-detail pt-3">
+        <div class="row m-0">
+            <div class="col-6 d-block d-lg-none p-0">
+                <h2 class="main-heading">{{pokemonDetails.name | uppercase}}</h2>
+                <h2>{{pokemonDetails.id | number:'3.0'}}</h2>
+            </div>
+            <div class="col-6 d-block d-lg-none">
+                <span class="navigate-icon close-dialog float-end" [tabindex]="0" (click) = "closeDialogWindow();"
+                (keyup.enter) = "closeDialogWindow();"></span>
+            </div>
+            <div class="col-6 col-lg-3 p-0">
+                <app-pokemon-item [showOnlyImage]="true" [pokemon] = "pokemonDetails"></app-pokemon-item>
+            </div>
+            <div class="col-6 col-lg-9 p-0">
+                <div class="row m-0 text-center">
+                    <div class="col-lg-5 text-left border-right d-none d-lg-block">
+                    <h2 class="main-heading">{{pokemonDetails.name | uppercase}}</h2>
+                    </div>
+                    <div class="col-lg-3 border-right d-none d-lg-block">
+                        <h2>{{pokemonDetails.id | number:'3.0'}}</h2>
+                    </div>
+                    <div class="col-12 col-lg-4 flex-center d-none d-lg-block">
+                        <span class="navigate-icon left-arrow" [tabindex]="0" (click)="pokemonDetails.id === 1 || goToPokemonDetails('prev')"
+                         (keyup.enter)="pokemonDetails.id === 1 || goToPokemonDetails('prev')"
+                         [ngClass]="{'disableNav' : pokemonDetails.id === 1 }"></span>
+                        <span class="navigate-icon close-dialog" [tabindex]="0" (keyup.enter) = "closeDialogWindow();" (click) = "closeDialogWindow();"></span>
+                        <span class="navigate-icon right-arrow" [tabindex]="0" (click)="pokemonDetails.id === pokemonCount || goToPokemonDetails('next')"
+                         (keyup.enter)="pokemonDetails.id === pokemonCount || goToPokemonDetails('next')"
+                         [ngClass]="{'disableNav' : pokemonDetails.id === pokemonCount }"></span>
+                    </div>
+                </div>
+                <div class="col-12 pokemon-text pt-lg-4 ps-4">
+                    <span class="elipsis-text">{{pokemonDetails.description}}</span>
+                    <span class="read-more" [tabindex]="0" (keyup.enter)="showMoreText = true;" (click) = "showMoreText = true;">read more</span>
+                    <div class="row m-0 more-text" [ngClass] = "{'expand' : showMoreText }">
+                        <div class="col-11 p-0">{{pokemonDetails.description}}</div>
+                        <div class="col-1 p-0">
+                            <span class="float-end" [tabindex]="0" (keyup.enter)="showMoreText = false;" (click) = "showMoreText = false">X</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row m-0 pokemon-features pt-5 pb-3">
+            <div class="col-6 col-sm-4 col-lg-3" [tabindex]="0">
+                <h2>Height</h2>
+                <div>{{pokemonDetails.height+"'"}}</div>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-3" [tabindex]="0">
+                <h2>Weight</h2>
+                <div>{{pokemonDetails.weight + " Kg"}}</div>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-3 pt-3 pt-sm-0" [tabindex]="0">
+                <h2>Gender(s)</h2>
+                <div>{{pokemonDetails.gender}}</div>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-3 pt-3 pt-lg-0" [tabindex]="0">
+                <h2>Egg Groups</h2>
+                <div>{{ pokemonDetails.eggGroups | titlecase}}</div>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-3 pt-3" [tabindex]="0">
+                <h2>Abilities</h2>
+                <div>{{ pokemonDetails.abilities | titlecase}}</div>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-3 pt-3" [tabindex]="0">
+                <h2>Types</h2>
+                <div>
+                    <span class="pokemon-type" *ngFor="let el of pokemonDetails.types" 
+                        [ngStyle]="{'background-color':  getColor(el.type.name)}">
+                        {{el.type.name | titlecase}}
+                    </span>
+                </div> 
+            </div>
+            <div class="col-12 col-lg-6 pt-3" [tabindex]="0">
+                <h2>Weak Against</h2>
+                <div>
+                    <span class="pokemon-type" *ngFor="let weakness of pokemonDetails.weakness" 
+                        [ngStyle]="{'background-color':  getColor(weakness)}">
+                        {{weakness | titlecase}}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row m-0 pokemon-stats my-5 mx-2">
+            <h2 class="sub-heading pb-2">Stats</h2>
+            <div class="col-12 col-lg-6 p-0 mt-2" [tabindex]="0" *ngFor = "let ele of pokemonDetails.stats">
+                <div class="row m-0">
+                    <div class="col-4">
+                        <h6 class="mt-1">{{ele.stat.name | titlecase}}</h6>
+                    </div>
+                    <div class="col-8 py-2">
+                        <div class="progress" style="height: 30px">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" 
+                            style="height: 30px;" [style.width]="ele.base_stat + '%'" aria-valuemin="0" aria-valuemax="100">
+                            <b>{{ele.base_stat}}</b>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+           
+        </div> 
+
+        <div class="row m-0 pokemon-evolution py-3">
+            <h2 class="sub-heading mb-3">Evolution Chain</h2>
+            <ng-container *ngFor="let el of pokemonDetails.evolutions; let $i = index">
+                <div class="col-3 custom-pokemon-grid pe-0">
+                    <app-pokemon-item [pokemon] = "el"></app-pokemon-item>
+                </div>
+                <div class="col-1 custom-arrow-grid flex-center pe-0" *ngIf="$i == 0 || ($i == 1 && pokemonDetails.evolutions.length>2)">
+                    <span class="evolution-arrow"></span>
+                </div>
+            </ng-container>
+        </div>
+        
+        <div class="row m-0 pokemon-navigation">
+            <div class="col-6 d-block d-lg-none my-3 text-center">
+               <button type="button" role = "navigation" (click)="pokemonDetails.id === 1 || goToPokemonDetails('prev')"
+               [ngClass]="{'disableNav' : pokemonDetails.id === 1 }"> Prev </button>
+            </div>
+            <div class="col-6 d-block d-lg-none my-3 text-center">
+                <button type="button" role = "navigation" (click)="pokemonDetails.id === pokemonCount || goToPokemonDetails('next')"
+                [ngClass]="{'disableNav' : pokemonDetails.id === pokemonCount }">Next</button>
+            </div>
+        </div>
+        
+    </div>
+</app-dialog>

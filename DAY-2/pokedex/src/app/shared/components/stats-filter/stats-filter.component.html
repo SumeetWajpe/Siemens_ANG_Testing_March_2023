@@ -1,0 +1,25 @@
+<div class="stat-select-section position-relative" [tabindex]="0" (keyup.enter) = "showStatFilter = !showStatFilter">
+    <input role="button" class="form-control" type="text" placeholder="Select" [tabindex]="0"
+    (click) = "showStatFilter = !showStatFilter" readonly />
+    <span class="arrow-icon"></span>
+</div>
+
+<div class="col-12 stat-filter-section" [tabindex]="0" [ngClass] = "{'expand' : showStatFilter }">
+    <h2>Select stats 
+        <span class="close-icon float-end" [tabindex]="0" (click)="showStatFilter=false" (keyup.enter)="showStatFilter=false"></span>
+    </h2>
+
+    <div class="row mb-2 m-0 flex-center" *ngFor="let stats of statList">
+        <div class="col-3 ps-0 stat-name">{{stats.name | titlecase}} </div>
+        <div class="col-9 stat-slider">
+            <ngx-slider [value]="0" [highValue]="210" [options]="options" (userChangeEnd)="onSliderChange($event, stats.name)">
+            </ngx-slider>
+        </div>
+    </div>
+
+    <div class="col-12 pe-0 filter-btns mt-3 bg-white shadow-none justify-content-end">
+        <button type="button" [tabindex]="0" name="button" class="btn me-2" (click)="reset()">Reset</button>
+        <button type="button" [tabindex]="0" name="button" class="btn" (click)="apply()">Apply</button>
+    </div>
+</div>               
+    
